@@ -4,7 +4,7 @@
 #include <locale.h>
 #include <stdlib.h>
 
-// Delay berween frames
+// Delay between frames
 // [µs]
 #define FRAME_DELAY 10000 * 10
 
