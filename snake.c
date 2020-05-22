@@ -78,21 +78,37 @@ int main(int argc, char **argv) {
         }
 
         /* Game logic */
-        if (snake_head->x + x_dir == food_x && snake_head->y + y_dir == food_y) {
+
+        // Find new head position
+        int new_head_x = snake_head->x + x_dir;
+        int new_head_y = snake_head->y + y_dir;
+        if (new_head_x < 0)
+            new_head_x = WIDTH - 1;
+        else if (new_head_x >= WIDTH)
+            new_head_x = 0;
+        if (new_head_y < 0)
+            new_head_y = HEIGHT - 1;
+        else if (new_head_y >= HEIGHT)
+            new_head_y = 0;
+
+        // Eat food!
+        if (new_head_x == food_x && new_head_y == food_y) {
             _snake = (snake_list*) malloc(sizeof(snake_list));
             if (!_snake) { // Allcation error
                 curs_set(1);
                 return 1;
             }
-            _snake->x = snake_head->x + x_dir;
-            _snake->y = snake_head->y + y_dir;
+            _snake->x = new_head_x;
+            _snake->y = new_head_y;
             _snake->head = NULL;
             snake_head->head = _snake;
             snake_head = _snake;
 
             food_x = rand() % WIDTH;
             food_y = rand() % HEIGHT;
-        } else {
+        }
+        // Just move
+        else {
             _snake = &snake;
             while (_snake) {
                 snake_list *head = _snake->head;
@@ -100,20 +116,12 @@ int main(int argc, char **argv) {
                     _snake->x = head->x;
                     _snake->y = head->y;
                 } else {
-                    _snake->x += x_dir;
-                    _snake->y += y_dir;
+                    _snake->x = new_head_x;
+                    _snake->y = new_head_y;
                 }
                 _snake = head;
             }
         }
-        if (snake_head->x < 0)
-            snake_head->x = WIDTH - 1;
-        else if (snake_head->x >= WIDTH)
-            snake_head->x = 0;
-        if (snake_head->y < 0)
-            snake_head->y = HEIGHT - 1;
-        else if (snake_head->y >= HEIGHT)
-            snake_head->y = 0;
 
         /* Drawing */
 
