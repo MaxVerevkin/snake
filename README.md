@@ -5,5 +5,5 @@ Compile with:<br>
 <i>make</i><br>
 <hr>
 Controls<br>
-Arrow keys - Move left player<br>
+Arrow keys - Move snake<br>
 q - Quit the game<br>
